@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>台灣幸福分數東亞第一，然後呢？｜互動式資料判讀報表</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <h1>台灣幸福分數東亞第一，然後呢？</h1>
+        <p>主觀幸福感與客觀壓力指標的落差分析｜互動式資料判讀報表</p>
+      </div>
+    </div>
+    <div class="meta">第九組｜13173228 張睿庭、13173240 宋丞訓、13173247 劉家安<br>資料來源：WHR、OECD、主計總處、內政部、衛福部、勞動部</div>
+  </header>
+
+  <section class="control-strip">
+    <div class="control-group">
+      <span class="label">報表視角</span>
+      <button class="tab active" data-view="overview">總覽</button>
+      <button class="tab" data-view="work">Q1 工時</button>
+      <button class="tab" data-view="cost">Q2 生活成本</button>
+      <button class="tab" data-view="mental">Q3 心理健康</button>
+      <button class="tab" data-view="summary">最後整合</button>
+    </div>
+    <div class="control-group">
+      <span class="label">基準年</span>
+      <select id="baseYear" class="select">
+        <option value="2015">2015</option>
+        <option value="2017" selected>2017</option>
+        <option value="2020">2020</option>
+        <option value="2022">2022</option>
+      </select>
+    </div>
+    <div class="control-group" id="modeGroup">
+      <span class="label">顯示</span>
+      <button class="mode-btn active" data-mode="index">指數化</button>
+      <button class="mode-btn" data-mode="raw">原始值</button>
+    </div>
+    <div class="control-group" id="seriesBar"></div>
+    <button class="ghost-btn" id="resetBtn">清除點選</button>
+    <button class="print-btn" id="printBtn">列印 / 另存 PDF</button>
+  </section>
+
+  <main class="container">
+    <section class="dashboard">
+      <section class="panel hero">
+        <div class="story-title">
+          <div class="eyebrow" id="heroEyebrow">互動式資料判讀報表</div>
+          <h2>幸福分數高，是否等於生活壓力低？</h2>
+          <p id="heroText">從幸福分數出發，讓使用者自行切換指標、基準年與圖表解讀，觀察「高幸福」是否能代表「低壓力」。</p>
+        </div>
+        <div class="question-cards">
+          <div class="qcard" data-view="work"><strong>Q1｜工時與幸福度</strong><span>高幸福感是否一定伴隨較低工時？點擊後看台日韓比較。</span></div>
+          <div class="qcard" data-view="cost"><strong>Q2｜生活成本壓力</strong><span>CPI 與房價所得比上升時，幸福分數是否同步下降？</span></div>
+          <div class="qcard" data-view="mental"><strong>Q3｜心理健康面向</strong><span>幸福分數是否能完整反映心理風險？</span></div>
+        </div>
+      </section>
+
+      <section class="kpi-row" id="kpiRow"></section>
+
+      <section class="grid">
+        <section class="panel card">
+          <div class="card-header">
+            <div>
+              <div class="card-title" id="mainTitle">多指標趨勢互動檢視</div>
+              <div class="card-subtitle" id="mainSubtitle">切換指標與基準年，觀察不同壓力訊號是否和幸福分數同步。</div>
+            </div>
+            <div class="legend" aria-label="legend"><span class="legend-item"><span class="dot" style="background:#e85d3f"></span>幸福</span><span class="legend-item"><span class="dot" style="background:#7a4fb3"></span>CPI</span><span class="legend-item"><span class="dot" style="background:#168aa5"></span>房價</span><span class="legend-item"><span class="dot" style="background:#5d5571"></span>自殺率</span></div>
+          </div>
+          <div class="chart-wrap" id="mainChart"></div>
+        </section>
+
+        <section class="panel card">
+          <div class="card-header">
+            <div>
+              <div class="card-title" id="miniTitle">2017 → 2024 變化幅度</div>
+              <div class="card-subtitle" id="miniSubtitle">壓力指標的上升幅度高於幸福分數。</div>
+            </div>
+          </div>
+          <div class="chart-wrap small-chart" id="miniChart"></div>
+        </section>
+      </section>
+    </section>
+
+    <aside class="panel side">
+      <div>
+        <h3 id="sideTitle">總覽解讀</h3>
+        <div class="badge-row" id="selectedSeriesBox"></div>
+        <div class="badge-row" id="selectedYearBox" style="margin-top:8px"></div>
+      </div>
+      <section class="insight-box">
+        <div class="headline">目前圖表在說什麼？</div>
+        <p id="sideWhat">這份報表把原本靜態圖表改成可操作的判讀介面。</p>
+      </section>
+      <section class="side-section">
+        <strong>可以說</strong>
+        <ul id="canList"></ul>
+      </section>
+      <section class="side-section">
+        <strong>不能說</strong>
+        <ul id="cannotList"></ul>
+      </section>
+      <section class="side-section">
+        <strong>資料檢視</strong>
+        <div class="table-box" id="dataTable"></div>
+      </section>
+      <section class="side-section">
+        <strong>學習單／報告用說法</strong>
+        <p>本互動報表不是單純重現 R 語言圖表，而是把靜態分析轉換成可操作的資料判讀介面。透過指標切換、基準年調整與「可以說／不能說」提示，使用者能更清楚理解幸福分數與生活壓力指標之間的落差。</p>
+      </section>
+    </aside>
+  </main>
+  <div class="footer-note">註：指數化僅用於比較相對變化方向，不比較不同單位資料的絕對大小；本報表呈現趨勢與對照，不推論因果。</div>
+</div>
+<div class="tooltip" id="tooltip"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

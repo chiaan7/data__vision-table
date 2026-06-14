@@ -1,2 +1,15 @@
-# data__vision-table
-Interactive Data Visualization Dashboard for Taiwan Happiness, Working Hours and Cost of Living Analysis
+# 第九組互動式資料判讀報表｜進階版
+
+## 開啟方式
+解壓縮後直接開啟 `index.html`。本版本不依賴外部 CDN，可離線瀏覽。
+
+## 主要互動功能
+- 報表視角切換：總覽、Q1 工時、Q2 生活成本、Q3 心理健康、最後整合。
+- 指標切換：幸福分數、CPI、房價所得比、自殺率。
+- 基準年切換：2015、2017、2020、2022。
+- 指數化 / 原始值切換。
+- 點擊圖表年份後，右側會更新目前選取的觀察點。
+- 右側提供「可以說 / 不能說」提示，避免過度推論。
+
+## 設計定位
+這份 HTML 不是把 R 報告圖表單純搬成網頁，而是把原本靜態分析轉換成可操作的資料判讀介面。
